@@ -30,7 +30,7 @@ twitter_username: leon_wanghui
 github_username: leonwanghui
 
 # Build settings
-theme: jekyll-theme-architect
+theme: jekyll-theme-minimal
 plugins:
   - jekyll-feed
 # Exclude from processing.
