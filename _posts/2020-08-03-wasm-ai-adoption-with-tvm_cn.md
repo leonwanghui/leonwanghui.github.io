@@ -92,7 +92,7 @@ WASM计算图的设计思路在上一章节已经描述过了，本章节主要�
          |  wasm_graph.wasm  |
          |_ _ _ _ _ _ _ _ _ _|
     ```
-    图加载阶段（由上图看来）似乎是非常简单的，但是实际情况要复杂地多。首先，WASM的运行时针对WASM IR定义了一整套汇编层面的用户接口，这对于上层应用开发者来说是极度不友好的；其次，WASM当前只支持整数类型（例如i32、u64等）作为函数参数，这就导致深度学习领域的张量类型无法通过原生方式传入；更别说还要增加thread、SIMD这些高级特性的支持等等。
+    图加载阶段（由上图看来）似乎是非常简单的，但是实际情况要复杂地多。首先，WASM的运行时针对WASM IR定义了一整套汇编层面的用户接口，这对于上层应用开发者来说是极度不友好的；其次，WASM当前只支持整数类型（例如i32、u64等）作为函数参数，这就导致深度学习领域的张量类型无法通过原生方式传入；更别说还要增加thread、SIMD128这些高级特性的支持等等。
 
     当然每个新领域的探索都离不开各种各样的问题，而且解决问题本身就是技术/科研人员的本职工作，所以我们没有寄希望于WASM社区而是主动尝试解决这些问题：既然WASM没有面向上层用户的高级API，我们就根据自己的需求开发一套；虽然WASM不支持传入struct或pointer，我们可以通过Memory机制将数据提前写入到WASM内存中然后将内存地址转成i32类型作为函数参数。虽然有些改动有点“反人类”，但是它可以清晰地展示出我们的思路和想法，这就已经足够了。
 
@@ -132,7 +132,7 @@ wasm-standalone/
 
 ### 原型展示
 
-为了让大家对该方案有一个更形象具体的理解，我们准备了一个简单的原型：通过TVM Relay API将基于ONNX生成的ResNet50模型编译成`wasm_graph_resnet50.wasm`文件，然后在运行时环境中通过Wasmtime加载WASM完成模型推理功能(具体操作流程详见[此处](https://github.com/apache/incubator-tvm/blob/master/apps/wasm-standalone/README.md#poc-guidelines)）。
+为了让大家对该方案有一个更形象具体的理解，我们准备了一个简单的原型：通过TVM Relay API将基于ONNX生成的ResNet50模型编译成`wasm_graph_resnet50.wasm`文件，然后在运行时环境中通过Wasmtime加载WASM完成模型推理功能（具体操作流程详见[此处](https://github.com/apache/incubator-tvm/blob/master/apps/wasm-standalone/README.md#poc-guidelines)）。
 
 ## 方案推广
 
@@ -150,7 +150,7 @@ wasm-standalone/
 
 ### TVM社区联动
 
-正如前面所说的，该方案仍处于试验阶段，因此我们会和TVM社区一起共同探索更多可能性，目前初步规划的特性有：
+正如前面所说的，该方案仍处于**试验**阶段，因此我们会和TVM社区一起共同探索更多可能性，目前初步规划的特性有：
 * 支持基于SIMD128的数据并行处理；
 * 进一步完善TVM社区的Rust runtime API模块，使其能原生支持WASM Memory特性的对接；
 * 基于WASM后端的AutoTVM优化；
