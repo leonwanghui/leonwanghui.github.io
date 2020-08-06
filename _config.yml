@@ -19,8 +19,8 @@ description: >-
   This is a blog website hosting all the technical news for
   machine learning field.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://leonwanghui/leonwanghui.github.io"
-twitter_username: leon_wanghui
+url: "https://leonwanghui.github.io"
+twitter_username: "@leon_wanghui"
 github_username: leonwanghui
 
 # Build settings
